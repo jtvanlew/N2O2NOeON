@@ -8,7 +8,7 @@ format short;format compact
 clc
 
 % INPUTS
-Pspan = 1;%[.0001 .001 .01 .1 1 10 100];
+Pspan = [.0001 .001 .01 .1 1 10 100];
 %atm
 Tmax = 15000; 							%K
 Tmin = 2000; 							%K
@@ -117,13 +117,13 @@ e0(6) = 0;
 e0(7) = R(7)*(TH_D(3)/2 + TH_I(4));
 e0(8) = R(8)*(TH_D(1)/2 + TH_I(2));
 %% Solution
-for o = 1:1
+for o = 1:7
     Pin = Pspan(o);
     P = Pin*101325; %PA
     PARTPi = zeros(1,Y)+P/Y;
     rho0 = P/(R0*300);
     % CALCULATE SPECIES RELATIONS
-    for i = 1:1
+    for i = 1:N
         T(i) = Tmin + z*(i-1);
         
         % PARTITION FUNCTIONS
@@ -326,20 +326,20 @@ for o = 1:1
     cd('../')
     
     % TEMPERATURE AND MOLE FRACTION
-   % myColors={'r','k','b','g','m','c','y','r','k'};
-    %figure(o)
-    %hold on
+    myColors={'r','k','b','g','m','c','y','r','k'};
+    figure(o)
+    hold on
     for j=1:Y
-        %plot(T,w(:,j),'Color',myColors{j});
-        %plot(T,C(:,j),'Color',myColors{j});
-        %plot(T,RHO(:,j),'Color',myColors{j});
+        plot(T,w(:,j),'Color',myColors{j});
+        plot(T,C(:,j),'Color',myColors{j});
+        plot(T,RHO(:,j),'Color',myColors{j});
     end
-    %legend('N_2','N','O_2','O','NO','e^-','O^+','N^+')
-    %ylabel('w - Mole Fraction')
-    %ylabel('C - Mass fraction')
-    %ylabel('\rho^* (\rho/\rho_0) - density [kg/m^3]')
-    %xlabel('T - Temperature [K]')
-    %xlim([2000 15000])
-    %ylim([0 1])
+    legend('N_2','N','O_2','O','NO','e^-','O^+','N^+')
+    ylabel('w - Mole Fraction')
+    ylabel('C - Mass fraction')
+    ylabel('\rho^* (\rho/\rho_0) - density [kg/m^3]')
+    xlabel('T - Temperature [K]')
+    xlim([2000 15000])
+    ylim([0 1])
     
 end
